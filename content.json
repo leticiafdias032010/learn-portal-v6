@@ -1,0 +1,10 @@
+{
+ "stages": [{
+  "id": 1, "category": "sat-math", "title": "Exemplo: equações lineares", "availableFrom": "2026-01-01",
+  "content": "Para resolver **3x + 5 = 20**, isole o x: subtraia 5 dos dois lados e divida por 3.",
+  "imageUrl": "", "videoUrl": "", "fileUrl": "",
+  "questions": [{"id": 1, "question": "Se 3x + 5 = 20, quanto vale x?", "optA": "3", "optB": "5", "optC": "15", "optD": "25",
+    "correctOpt": "B", "xp": 50, "explanation": "3x = 15, logo x = 5."}]
+ }],
+ "posts": []
+}

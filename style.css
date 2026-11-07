@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+body { font-family: 'Nunito', sans-serif; background-color: #F7F9FA; position: static !important; top: 0px !important; min-height: 100vh; }
+.font-fredoka { font-family: 'Fredoka', sans-serif; }
+
+/* Botões 3D Gamificados estilo Duolingo */
+.btn-duo-green { background-color: #58CC02; box-shadow: 0 4px 0 #46A302; transition: all 0.1s ease; }
+.btn-duo-green:active { transform: translateY(4px); box-shadow: 0 0 0 #46A302; }
+.btn-duo-blue { background-color: #1CB0F6; box-shadow: 0 4px 0 #1899D6; transition: all 0.1s ease; }
+.btn-duo-blue:active { transform: translateY(4px); box-shadow: 0 0 0 #1899D6; }
+.btn-duo-purple { background-color: #A560FF; box-shadow: 0 4px 0 #8840E5; transition: all 0.1s ease; }
+.btn-duo-purple:active { transform: translateY(4px); box-shadow: 0 0 0 #8840E5; }
+.btn-duo-yellow { background-color: #FFC800; box-shadow: 0 4px 0 #E5B200; transition: all 0.1s ease; }
+.btn-duo-yellow:active { transform: translateY(4px); box-shadow: 0 0 0 #E5B200; }
+.card-duo { border: 2px solid #E5E5E5; border-bottom-width: 5px; border-radius: 1rem; background: white; }
+
+/* ESCONDER A BARRA DO GOOGLE TRADUTOR COMPLETAMENTE */
+#google_translate_element { display: none !important; opacity: 0 !important; height: 0 !important; }
+.goog-te-gadget { display: none !important; }
+iframe.goog-te-banner-frame { display: none !important; }
+.goog-te-banner-frame { display: none !important; }
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; } /* Novo tooltip flutuante Google */
+.VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; } /* Caixas de hover Google */
+.skiptranslate { display: none !important; }
+body { top: 0px !important; position: static !important; }

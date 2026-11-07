@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn by L. D.: estude SAT Math, SAT Reading & Writing e Excel com explicações e exercícios gratuitos.">
+  <meta property="og:title" content="Learn by L. D."><meta property="og:description" content="Material gratuito de SAT e Excel com exercícios e XP.">
+  <link rel="icon" href="logo.jpg">
+  <title>Learn by L. D.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'pt', includedLanguages: 'pt,en,es', autoDisplay: false}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body class="text-gray-800 min-h-screen flex flex-col">
+
+  <!-- ================= MODAL DOAÇÃO ================= -->
+  <div id="donationModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full card-duo relative shadow-2xl text-center">
+      <button onclick="closeDonationModal()" class="absolute top-4 right-4 text-gray-400 font-bold hover:text-gray-600 text-lg">✖</button>
+      <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-3 animate-bounce">💖</div>
+      <h2 class="text-2xl font-black font-fredoka text-gray-800 mb-2">Apoie o Projeto!</h2>
+      <p class="text-gray-500 text-xs font-semibold mb-6">Sua doação nos ajuda a manter e melhorar o desenvolvimento da plataforma. Doe o valor que desejar para apoiar!</p>
+      
+      <button onclick="showPixKey()" class="w-full py-3 btn-duo-green text-white font-extrabold rounded-xl text-sm uppercase mb-3">Fazer Doação (PIX)</button>
+              <button onclick="shareProject()" class="w-full py-3 btn-duo-blue text-white font-extrabold rounded-xl text-sm uppercase mb-3 flex items-center justify-center gap-2"><i class="fas fa-share-alt"></i> Compartilhar o Projeto</button>
+      
+      <div id="pixArea" class="hidden space-y-2">
+        <div id="pixList" class="space-y-3 mt-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="bg-white border-b-2 border-gray-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <img src="logo.jpg" alt="LbyL" class="w-12 h-12 rounded-xl object-contain">
+        <span class="hidden sm:inline font-fredoka font-black text-xl text-gray-800 tracking-tight" id="brandName">LEARN BY L. D.</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        
+        <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200 text-xs font-bold">
+          <button onclick="setLanguage('pt')" id="lang-pt" class="px-2 py-1 rounded-lg">🇧🇷 PT</button>
+          <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1 rounded-lg">🇺🇸 EN</button>
+          <button onclick="setLanguage('es')" id="lang-es" class="px-2 py-1 rounded-lg">🇪🇸 ES</button>
+        </div>
+        
+        <div class="flex items-center gap-2">
+           <a href="#contato" class="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-3 py-1.5 rounded-xl border border-gray-200 font-black text-xs"><i class="fas fa-envelope"></i> Contato</a>
+           <button onclick="openDonationModal()" class="flex items-center gap-1.5 bg-pink-100 text-pink-600 px-3 py-1.5 rounded-xl border border-pink-200 font-black text-xs hover:bg-pink-200 transition-colors">
+             <i class="fas fa-heart"></i> Apoiar
+           </button>
+           <button onclick="shareProject()" class="flex items-center gap-1.5 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-xl border border-blue-200 font-black text-xs hover:bg-blue-200 transition-colors">
+             <i class="fas fa-share-alt"></i> Compartilhar
+           </button>
+        </div>
+        
+        <div id="userStatsHeader" class="hidden flex items-center gap-2">
+           <div id="headerCategoryXP" class="flex items-center gap-1 bg-blue-50 px-2.5 py-1.5 rounded-xl border border-blue-200 font-black text-blue-600 text-xs">
+             <span>XP 0</span>
+           </div>
+           <div id="headerCategoryBadge" class="flex items-center gap-1 bg-yellow-50 px-2.5 py-1.5 rounded-xl border border-yellow-300 font-black text-yellow-700 text-xs">
+               Bronze I
+           </div>
+        </div>
+
+        <div id="authArea" class="flex items-center gap-2"></div>
+        <button id="adminBtn" onclick="adminLogin()" class="hidden text-gray-400 hover:text-gray-700 text-xs font-black"><i class="fas fa-user-shield"></i> <span id="adminBtnLabel">Admin</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN LAYOUT ================= -->
+  <div class="max-w-7xl mx-auto px-4 py-8 flex-grow grid grid-cols-1 md:grid-cols-4 gap-8 w-full">
+    
+    <!-- SIDEBAR -->
+    <aside class="md:col-span-1 space-y-3">
+      <nav class="space-y-1.5"><div id="subjectNav" class="space-y-1.5"></div>
+        
+        
+        
+        <!-- BOTAO DE MATEMATICA REMOVIDO DAQUI -->
+
+        
+        
+        <button onclick="switchTab('services')" id="tabBtn-services" class="w-full text-left px-4 py-3 rounded-2xl font-black flex items-center text-gray-600 gap-3 hover:bg-gray-100 border-2 border-transparent text-xs">
+          <i class="fas fa-concierge-bell text-purple-600 text-base"></i> <span data-i18n="nav_services">Solicitar Serviço</span>
+        </button>
+        <button onclick="switchTab('extras')" id="tabBtn-extras" class="w-full text-left px-4 py-3 rounded-2xl font-black flex items-center text-gray-600 gap-3 hover:bg-gray-100 border-2 border-transparent text-xs">
+          <i class="fas fa-star text-yellow-500 text-base"></i> <span data-i18n="nav_extras">Conteúdos Extra</span>
+        </button>
+        
+        
+      </nav>
+      
+      <button onclick="switchTab('admin')" id="tabBtn-admin" class="hidden w-full text-left px-4 py-3 rounded-2xl font-black flex items-center text-red-600 gap-3 bg-red-50 border-2 border-red-200 text-xs"><i class="fas fa-user-shield text-base"></i> Painel Admin</button>
+<div id="adminTools" class="hidden card-duo p-4 space-y-2 bg-red-50 border-red-200">
+  <p class="text-xs font-black text-red-600 uppercase">Admin (cópia local)</p>
+  <button onclick="exportContent()" class="w-full py-2 btn-duo-blue text-white font-extrabold rounded-xl text-xs uppercase">Exportar content.json</button>
+  <label class="block w-full py-2 btn-duo-purple text-white font-extrabold rounded-xl text-xs uppercase text-center cursor-pointer">Importar JSON<input type="file" accept=".json" class="hidden" onchange="importContent(event)"></label>
+  <p class="text-[10px] font-bold text-gray-500">Para publicar, envie o content.json exportado para a hospedagem.</p>
+</div>
+<!-- WIDGET DE LIGA INDIVIDUAL -->
+      <div class="card-duo p-4 bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200 hidden" id="xpWidgetContainer">
+         <div class="flex items-center justify-between mb-2">
+           <span class="text-xs font-black text-yellow-700 uppercase" id="sidebarCategoryLabel">XP</span>
+           <span id="leagueXPText" class="text-xs font-black text-yellow-800">0 / 1000 XP</span>
+         </div>
+         <p class="text-[11px] font-extrabold text-gray-700 mb-2">Suba de nível a cada 1.000 XP acumulados nesta categoria!</p>
+         <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+           <div id="leagueProgressBar" class="bg-yellow-500 h-full w-0 transition-all"></div>
+         </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="md:col-span-3">
+      
+      <!-- ================= SAT MATH ================= -->
+      <div id="subjectSections" class="space-y-6"></div>
+      <section id="sec-services" class="hidden space-y-6">
+        <div class="card-duo p-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-none shadow-lg text-center space-y-3">
+          <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl mx-auto flex items-center justify-center text-3xl mb-1">
+             <i class="fas fa-handshake"></i>
+          </div>
+          <h1 class="font-fredoka text-3xl font-bold">Solicitar Projeto ou Serviço</h1>
+          <p class="text-xs font-semibold max-w-xl mx-auto text-purple-100">
+             Deseja encomendar um projeto exclusivo, layouts, designs, consultoria, aulas particulares, desenvolvimento personalizado e todos os tipos de serviços associados? Entre em contato diretamente com a Admin L. D. pelos canais oficiais abaixo para negociar prazos e valores.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div class="card-duo p-6 flex flex-col justify-between items-center text-center space-y-4">
+             <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-2xl font-bold"><i class="fas fa-envelope"></i></div>
+             <div>
+               <h3 class="font-bold text-gray-800 text-lg">Solicitar por E-mail</h3>
+               <p class="text-xs text-gray-500 font-semibold mt-1">Envie os detalhes do seu projeto para o e-mail oficial.</p>
+               <div id="svcMailTxt" class="mt-2 text-sm font-black text-purple-700"></div>
+             </div>
+             <a id="svcMail" href="#" class="w-full py-3 btn-duo-purple text-white font-extrabold rounded-xl text-xs uppercase block">
+               Enviar E-mail para Admin
+             </a>
+           </div>
+           
+           <div class="card-duo p-6 flex flex-col justify-between items-center text-center space-y-4">
+             <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-bold"><i class="fab fa-whatsapp"></i></div>
+             <div>
+               <h3 class="font-bold text-gray-800 text-lg">Solicitar por Telefone / WhatsApp</h3>
+               <p class="text-xs text-gray-500 font-semibold mt-1">Fale diretamente via mensagem instantânea ou ligação.</p>
+               <div id="svcPhoneTxt" class="mt-2 text-sm font-black text-emerald-700"></div>
+             </div>
+             <a id="svcWa" href="#" target="_blank" class="w-full py-3 btn-duo-green text-white font-extrabold rounded-xl text-xs uppercase block">
+               Chamar no WhatsApp
+             </a>
+           </div>
+        </div>
+      </section>
+
+      <!-- ================= EXTRAS ================= -->
+      <section id="sec-extras" class="hidden space-y-6">
+        <div class="card-duo p-6">
+          <h1 class="font-fredoka text-2xl font-bold text-gray-800">Conteúdos Extra</h1>
+          <p class="text-sm font-semibold text-gray-400">Materiais publicados pela Admin L. D.</p>
+        </div>
+        <div id="adminPostCard" class="hidden card-duo p-6 bg-blue-50 border-blue-200">
+           <h3 class="font-fredoka font-bold text-lg text-blue-900 mb-4"><i class="fas fa-plus-circle"></i> Publicar Conteúdo Extra</h3>
+           <form onsubmit="handleCreatePost(event)" class="space-y-4">
+             <div>
+               <label class="block text-xs font-black uppercase text-gray-600 mb-1">Título</label>
+               <input type="text" id="postTitle" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-semibold text-sm">
+             </div>
+             <div>
+               <label class="block text-xs font-black uppercase text-gray-600 mb-1">Área / Categoria</label>
+               <input type="text" id="postCategory" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-semibold text-sm">
+             </div>
+             <div>
+               <label class="block text-xs font-black uppercase text-gray-600 mb-1">Explicação / Conteúdo</label>
+               <textarea id="postBody" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-semibold text-sm"></textarea>
+             </div>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+               <input type="url" id="postImg" placeholder="URL da Foto/Imagem" class="px-3 py-1.5 border rounded-lg text-xs">
+               <input type="url" id="postVideo" placeholder="URL do Vídeo" class="px-3 py-1.5 border rounded-lg text-xs">
+               <input type="url" id="postLink" placeholder="Link Externo" class="px-3 py-1.5 border rounded-lg text-xs">
+             </div>
+             <button type="submit" class="px-5 py-2.5 btn-duo-blue text-white font-extrabold rounded-xl text-sm uppercase">Publicar</button>
+           </form>
+        </div>
+        <div id="extrasFeed" class="space-y-4"></div>
+      </section>
+
+      <section id="sec-admin" class="hidden space-y-6">
+        <div class="card-duo p-6 bg-red-50 border-red-200"><h1 class="font-fredoka text-2xl font-bold text-red-600">Painel Admin: acessos e expiração</h1>
+        <p class="text-xs font-semibold text-gray-500 mt-1">Sem data = acesso ilimitado. Conta expirada perde só o conteúdo marcado como restrito.</p></div>
+        <div class="card-duo p-6 overflow-x-auto"><table class="w-full text-left text-sm font-semibold">
+          <thead><tr class="border-b text-xs text-gray-400 uppercase"><th class="py-3">Usuário</th><th class="py-3">Status</th><th class="py-3">Expiração</th></tr></thead>
+          <tbody id="adminUserTable"></tbody></table></div>
+        <div class="card-duo p-6"><div class="flex justify-between items-center mb-3"><h3 class="font-fredoka font-bold text-lg">📊 Estatísticas</h3><button onclick="renderStats()" class="text-xs font-black text-blue-600">Atualizar</button></div><div id="adminStats" class="grid md:grid-cols-2 gap-3 text-xs font-bold"></div></div>
+<div class="card-duo p-6 space-y-2"><h3 class="font-fredoka font-bold text-lg">⚙️ Configurações do site (valem na hora, sem republicar)</h3>
+ <div class="grid md:grid-cols-2 gap-2"><input id="stBrand" placeholder="Nome do site" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="stEmail" placeholder="E-mail de contato" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="stPhone" placeholder="Telefone exibido" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="stWa" placeholder="WhatsApp (só números, com 55)" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="stDays" type="number" min="1" placeholder="Previsão de novas etapas (dias)" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="stUrl" placeholder="Endereço do site (usado nos e-mails)" class="px-3 py-2 border rounded-xl text-xs font-bold"></div>
+ <textarea id="stPix" rows="3" placeholder="Chaves PIX, uma por linha: Rótulo|chave" class="w-full px-3 py-2 border rounded-xl text-xs font-bold"></textarea>
+ <button onclick="saveSettings()" class="px-4 py-2 btn-duo-blue text-white font-extrabold rounded-xl text-xs uppercase">Salvar configurações</button></div>
+<div class="card-duo p-6 space-y-2"><h3 class="font-fredoka font-bold text-lg">📚 Áreas / matérias (adicione novas sem mexer em código)</h3><div id="subjList" class="space-y-1"></div>
+ <div class="grid md:grid-cols-3 gap-2"><input id="sbId" placeholder="id (ex: ingles)" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="sbName" placeholder="Nome" class="px-3 py-2 border rounded-xl text-xs font-bold"><input id="sbIcon" placeholder="Ícone (ex: fa-language)" class="px-3 py-2 border rounded-xl text-xs font-bold">
+ <select id="sbColor" class="px-3 py-2 border rounded-xl text-xs font-bold"><option value="blue">Azul</option><option value="green">Verde</option><option value="purple">Roxo</option><option value="orange">Laranja</option><option value="pink">Rosa</option></select><select id="sbKind" class="px-3 py-2 border rounded-xl text-xs font-bold"><option value="quiz">Com exercícios</option><option value="material">Só material</option></select><input id="sbSort" type="number" placeholder="Ordem" class="px-3 py-2 border rounded-xl text-xs font-bold"></div>
+ <textarea id="sbDesc" rows="2" placeholder="Descrição exibida no topo da área" class="w-full px-3 py-2 border rounded-xl text-xs font-bold"></textarea><textarea id="sbGen" rows="2" placeholder="Instruções para o gerador automático (opcional)" class="w-full px-3 py-2 border rounded-xl text-xs font-bold"></textarea>
+ <button onclick="saveSubject()" class="px-4 py-2 btn-duo-green text-white font-extrabold rounded-xl text-xs uppercase">Salvar área</button></div>
+<div class="card-duo p-6 space-y-2"><h3 class="font-fredoka font-bold text-lg">👥 Administradores e e-mails automáticos</h3><div id="adminList" class="space-y-1"></div>
+ <div class="flex gap-2"><input id="adNew" placeholder="e-mail do novo admin" class="flex-1 px-3 py-2 border rounded-xl text-xs font-bold"><button onclick="addAdmin()" class="px-4 py-2 btn-duo-purple text-white font-extrabold rounded-xl text-xs uppercase">Adicionar</button></div>
+ <p class="text-[11px] font-semibold text-gray-500 pt-2">E-mails (Brevo, grátis): crie conta em brevo.com, verifique o e-mail remetente e gere uma chave de API. Ela fica guardada no servidor e nunca volta para o navegador.</p>
+ <div class="grid md:grid-cols-2 gap-2"><input id="bvKey" type="password" placeholder="Chave de API do Brevo" class="px-3 py-2 border rounded-xl text-xs"><input id="bvSender" placeholder="E-mail remetente verificado" class="px-3 py-2 border rounded-xl text-xs"></div>
+ <div class="flex gap-2"><button onclick="saveMail()" class="px-4 py-2 btn-duo-blue text-white font-extrabold rounded-xl text-xs uppercase">Salvar</button><button onclick="sendPending()" class="px-4 py-2 btn-duo-yellow text-gray-900 font-extrabold rounded-xl text-xs uppercase">Enviar e-mails pendentes</button></div><pre id="mailLog" class="text-[11px] font-bold text-gray-600 whitespace-pre-wrap"></pre></div>
+<div class="card-duo p-6 space-y-3 bg-amber-50 border-amber-200">
+          <h3 class="font-fredoka font-bold text-lg text-amber-900">🤖 Gerador automático de etapas (100% gratuito)</h3>
+          <p class="text-xs font-semibold text-gray-600">Gera uma etapa por tópico, com liberação programada. Tudo entra como <b>rascunho</b>: revise e publique. Questões numéricas têm o gabarito conferido automaticamente.</p>
+          <div class="grid md:grid-cols-3 gap-2">
+            <select id="genCat" onchange="loadCurriculum()" class="px-3 py-2 border rounded-xl text-xs font-bold"></select>
+            <input type="date" id="genStart" class="px-3 py-2 border rounded-xl text-xs font-bold">
+            <input type="number" id="genStep" value="1" min="1" class="px-3 py-2 border rounded-xl text-xs font-bold" title="Dias entre etapas">
+          </div>
+          <textarea id="genTopics" rows="5" class="w-full px-3 py-2 border rounded-xl text-xs font-semibold" placeholder="Um tópico por linha"></textarea>
+          <input type="password" id="genKey" placeholder="Chave gratuita do Google AI Studio (aistudio.google.com/apikey). Fica só neste navegador." class="w-full px-3 py-2 border rounded-xl text-xs" onchange="localStorage.setItem('learn_gemini_key',this.value.trim())">
+          <div class="flex flex-wrap gap-2">
+            <button onclick="runGenerator()" class="px-4 py-2 btn-duo-yellow text-gray-900 font-extrabold rounded-xl text-xs uppercase">Gerar etapas</button>
+            <button onclick="publishAllDrafts()" class="px-4 py-2 btn-duo-green text-white font-extrabold rounded-xl text-xs uppercase">Publicar todos os rascunhos</button>
+            <button onclick="copyGenPrompt()" class="px-4 py-2 btn-duo-blue text-white font-extrabold rounded-xl text-xs uppercase">Copiar prompt (sem API)</button>
+          </div>
+          <textarea id="genPaste" rows="3" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Sem API: cole o prompt em qualquer chat de IA gratuito e cole aqui o JSON que ele devolver"></textarea>
+          <button onclick="importPasted()" class="px-4 py-2 btn-duo-purple text-white font-extrabold rounded-xl text-xs uppercase">Importar JSON colado</button>
+          <pre id="genLog" class="text-[11px] font-bold text-gray-600 whitespace-pre-wrap"></pre>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <div id="authModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[90] flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl p-8 max-w-md w-full card-duo relative text-center">
+    <button onclick="document.getElementById('authModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 font-bold">✖</button>
+    <h2 id="authTitle" class="text-2xl font-black font-fredoka mb-1">Entrar</h2>
+    <p class="text-xs text-gray-400 font-semibold mb-4">Opcional: a conta só serve para salvar seu progresso.</p>
+    <div id="authError" class="hidden mb-3 p-2 bg-blue-50 text-blue-700 text-xs font-bold rounded-xl"></div>
+    <form onsubmit="submitAuth(event)" class="space-y-3">
+      <input id="authUsername" placeholder="Nome de usuário" class="hidden w-full px-4 py-3 rounded-xl border-2 text-sm font-bold">
+      <input id="authEmail" type="email" required placeholder="E-mail" class="w-full px-4 py-3 rounded-xl border-2 text-sm font-bold">
+      <input id="authPassword" type="password" required minlength="6" placeholder="Senha" class="w-full px-4 py-3 rounded-xl border-2 text-sm font-bold">
+      <button class="w-full py-3 btn-duo-green text-white font-extrabold rounded-xl text-sm uppercase" id="authSubmit">Entrar</button>
+    </form>
+    <div class="flex justify-between text-xs font-extrabold mt-3"><button onclick="resetPw()" class="text-blue-500">Esqueci a senha</button><button onclick="toggleAuth()" id="authToggle" class="text-gray-500">Criar conta</button></div>
+  </div></div>
+<div id="notifPanel" class="hidden fixed top-16 right-4 w-80 max-h-96 overflow-y-auto bg-white border-2 rounded-2xl shadow-xl z-50 p-2 space-y-1"></div>
+<div id="userModal" class="hidden fixed inset-0 bg-black/70 z-[95] flex items-center justify-center p-4 overflow-y-auto"><div class="bg-white rounded-3xl p-6 max-w-2xl w-full card-duo relative my-8"><button onclick="document.getElementById('userModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 font-bold">✖</button><div id="userBody"></div></div></div>
+<div id="surveyModal" class="hidden fixed inset-0 bg-black/70 z-[95] flex items-center justify-center p-4 overflow-y-auto"><div class="bg-white rounded-3xl p-6 max-w-lg w-full card-duo relative my-8">
+ <button onclick="closeSurvey()" class="absolute top-4 right-4 text-gray-400 font-bold">✖</button>
+ <h2 id="surveyTitle" class="text-xl font-black font-fredoka">Conta pra gente</h2>
+ <p class="text-xs text-gray-500 font-semibold mb-3">Pesquisa rápida para melhorar o portal. Só a avaliação em estrelas e as matérias de interesse são obrigatórias. Você pode mudar tudo depois, no seu perfil.</p>
+ <div id="surveyErr" class="hidden mb-2 p-2 bg-red-50 text-red-700 text-xs font-bold rounded-xl"></div>
+ <form onsubmit="saveSurvey(event)" class="space-y-3 text-xs font-bold">
+  <div><label>Matérias de interesse *</label><div id="svInterests" class="flex flex-wrap gap-2 mt-1"></div></div>
+  <input id="svGoal" placeholder="Qual seu objetivo com o portal? (opcional)" class="w-full px-3 py-2 border rounded-xl">
+  <select id="svSource" class="w-full px-3 py-2 border rounded-xl"><option value="">Como conheceu o portal? (opcional)</option><option>TikTok</option><option>Instagram</option><option>YouTube</option><option>Google</option><option>Indicação de amigo</option><option>WhatsApp/Telegram</option><option>Outro</option></select>
+  <div class="grid grid-cols-3 gap-2"><select id="svGender" class="px-3 py-2 border rounded-xl"><option value="">Gênero</option><option value="masculino">Masculino</option><option value="feminino">Feminino</option></select><input id="svAge" type="number" min="5" max="120" placeholder="Idade" class="px-3 py-2 border rounded-xl"><input id="svNat" placeholder="Nacionalidade" class="px-3 py-2 border rounded-xl"></div>
+  <div><label>Sua avaliação da experiência *</label><div id="svStars" class="text-3xl"></div></div>
+  <textarea id="svFeedback" rows="2" placeholder="Críticas e conselhos (opcional)" class="w-full px-3 py-2 border rounded-xl"></textarea>
+  <textarea id="svIdeas" rows="2" placeholder="Ideias para melhorar o projeto (opcional)" class="w-full px-3 py-2 border rounded-xl"></textarea>
+  <label class="flex gap-2 items-center"><input type="checkbox" id="svNotifC"> Avisar quando saírem etapas das matérias que escolhi</label>
+  <label class="flex gap-2 items-center"><input type="checkbox" id="svNotifE"> Avisar quando sair Conteúdo Extra</label>
+  <label class="flex gap-2 items-center"><input type="checkbox" id="svNotifM"> Receber os avisos também por e-mail</label>
+  <p class="text-[10px] text-gray-400">Usamos esses dados só para melhorar o portal. Você pode editá-los quando quiser.</p>
+  <button class="w-full py-3 btn-duo-green text-white font-extrabold rounded-xl uppercase">Salvar</button></form><div id="svProgress"></div></div></div>
+<footer id="contato" class="bg-white border-t-2 border-gray-200 mt-8"><div class="max-w-7xl mx-auto px-4 py-4 text-xs font-bold text-gray-500 flex flex-wrap gap-4 justify-between items-center">
+  <span>© <span id="footBrand">Learn by L. D.</span> — <b>Contato:</b></span><span id="contactLinks" class="flex flex-wrap gap-4"></span></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
